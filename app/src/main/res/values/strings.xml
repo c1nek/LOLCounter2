@@ -2,5 +2,14 @@
     <string name="app_name">LOL Counter</string>
 
     <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
+
+    <string name="login_hint">Enter nick</string>
+    <string name="servers_prompt">Choose server</string>
+    <string-array name="servers_arrays">
+        <item>serv1</item>
+        <item>serv2</item>
+        <item>serv3</item>
+        <item>serv4</item>
+        <item>serv5</item>
+    </string-array>
 </resources>
