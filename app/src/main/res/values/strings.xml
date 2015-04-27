@@ -3,13 +3,18 @@
 
     <string name="hello_world">Hello world!</string>
 
-    <string name="login_hint">Enter nick</string>
-    <string name="servers_prompt">Choose server</string>
+    <string name="login_hint">Summoner name</string>
+    <string name="servers_prompt">Server</string>
     <string-array name="servers_arrays">
-        <item>serv1</item>
-        <item>serv2</item>
-        <item>serv3</item>
-        <item>serv4</item>
-        <item>serv5</item>
+        <item>Brazil</item>
+        <item>Europe Nordic and East</item>
+        <item>Europe West</item>
+        <item>Latin America North</item>
+        <item>North America</item>
+        <item>Oceania</item>
+        <item>Russia</item>
+        <item>Turkey</item>
+        <item>Republic of Korea</item>
+        <item>Public Beta Environment</item>
     </string-array>
 </resources>
