@@ -12,8 +12,7 @@
         android:layout_height="fill_parent"
         android:measureWithLargestChild="false"
         android:baselineAligned="false"
-        android:layout_margin="10dp"
-        android:visibility="visible">
+        android:layout_margin="10dp">
 
         <TextView
             android:layout_width="0dp"

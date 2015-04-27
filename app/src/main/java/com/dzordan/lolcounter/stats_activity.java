@@ -14,7 +14,7 @@ public class stats_activity extends login_activity {
     TableLayout table;
 
 
-    LinearLayout lay1,lay2,lay3,lay4,lay5;
+    LinearLayout linearLay;
     TableRow row;
 
     View v;
@@ -25,18 +25,9 @@ public class stats_activity extends login_activity {
         setContentView(R.layout.stats_activity_layout);
 
         table = (TableLayout) findViewById(R.id.mainTable);
-        lay1 = (LinearLayout) findViewById(R.id.lay1);
-        lay2 = (LinearLayout) findViewById(R.id.lay2);
-        lay3 = (LinearLayout) findViewById(R.id.lay3);
-        lay4 = (LinearLayout) findViewById(R.id.lay4);
-        lay5 = (LinearLayout) findViewById(R.id.lay5);
-
-        showThree();
-
-
         //linearLay = (LinearLayout) findViewById(R.id.linearLay);
 
-        //row = (TableRow) findViewById(R.id.champLay);
+        row = (TableRow) findViewById(R.id.champLay);
 
         //row.
 
@@ -58,24 +49,6 @@ public class stats_activity extends login_activity {
 
         // Set the text view as the activity layout
        // setContentView(textView);
-    }
-
-
-    public void showAll(){
-        lay1.setVisibility(View.VISIBLE);
-        lay2.setVisibility(View.VISIBLE);
-        lay3.setVisibility(View.VISIBLE);
-        lay4.setVisibility(View.VISIBLE);
-        lay5.setVisibility(View.VISIBLE);
-    }
-
-    public void showThree(){
-        lay1.setVisibility(View.VISIBLE);
-        lay2.setVisibility(View.VISIBLE);
-        lay3.setVisibility(View.VISIBLE);
-        lay4.setVisibility(View.INVISIBLE);
-        lay5.setVisibility(View.INVISIBLE);
-
     }
 
 
