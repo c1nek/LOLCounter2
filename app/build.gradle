@@ -1,3 +1,16 @@
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:1.1.0'
+    }
+}
+allprojects {
+    repositories {
+        jcenter()
+    }
+}
 apply plugin: 'com.android.application'
 
 android {
@@ -17,6 +30,9 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+}
+dependencies {
+    compile project(':mopub-sdk')
 }
 
 dependencies {
