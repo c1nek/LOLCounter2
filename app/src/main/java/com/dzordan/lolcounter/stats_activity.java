@@ -27,7 +27,7 @@ public class stats_activity extends login_activity {
         table = (TableLayout) findViewById(R.id.mainTable);
         //linearLay = (LinearLayout) findViewById(R.id.linearLay);
 
-        row = (TableRow) findViewById(R.id.champLay);
+        //row = (TableRow) findViewById(R.id.champLay);
 
         //row.
 

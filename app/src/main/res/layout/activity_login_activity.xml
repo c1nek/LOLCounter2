@@ -7,6 +7,12 @@
     android:background="@drawable/lolbg"
     android:backgroundTint="#5d000000">
 
+    <com.mopub.mobileads.MoPubView
+        android:id="@+id/adview"
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        />
+
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
