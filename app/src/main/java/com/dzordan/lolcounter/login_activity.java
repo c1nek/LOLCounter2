@@ -1,5 +1,7 @@
 package com.dzordan.lolcounter;
 
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.StrictMode;
 import android.support.v7.app.ActionBarActivity;
@@ -32,16 +34,24 @@ import java.io.Reader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import android.os.Handler;
 
 public class login_activity extends ActionBarActivity {
 
     public final static String EXTRA_MESSAGE = "com.dzordan.lolcounter.stats_activity";
     private final static String API_KEY = "?api_key=7fcce4c3-93f8-4db7-bd11-16dd22ef3996";
 
+    private Handler handler;
+    private ProgressDialog dialog;
+    Context mContext;
+
+
     Button search_button;
     TextView login_field, info_field;
     Spinner server_field;
+    String login, server, regiocode;
     private MoPubView moPubView;
+    public game_stats gameStats;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +60,8 @@ public class login_activity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_login_activity);
+
+        mContext = this;
 
         if (android.os.Build.VERSION.SDK_INT > 9)
         {
@@ -63,9 +75,7 @@ public class login_activity extends ActionBarActivity {
        // moPubView.setBannerAdListener(this);
 
 
-
-
-
+        gameStats = new game_stats();
 
         login_field = (TextView)findViewById(R.id.login_field);
         login_field.setOnClickListener(textViewListener);
@@ -82,24 +92,29 @@ public class login_activity extends ActionBarActivity {
         super.onDestroy();
     }
 
-    private Button.OnClickListener buttonListener = new Button.OnClickListener() {
+    protected Button.OnClickListener buttonListener = new Button.OnClickListener() {
         public void onClick(View arg0) {
             if(login_field.getText().toString().length() > 0) {
-                Intent intent = new Intent(login_activity.this, stats_activity.class);
-                String login = login_field.getText().toString();
-                String server = server_field.getSelectedItem().toString();
+                final Intent intent = new Intent(login_activity.this, stats_activity.class);
+                login = login_field.getText().toString().toLowerCase();
+                regiocode = getRegionCode(server_field.getSelectedItem().toString());
 
                 try {
-                    if(checkHttpCode(getRegionCode(server), login) == 200){
-                        try {
-                            getID(getRegionCode(server), login);
-                        } catch (MalformedURLException e) {
-                            e.printStackTrace();
-                        }
+                    if(checkHttpCode(regiocode, login) == 200){
 
-                            intent.putExtra(EXTRA_MESSAGE, login);
-                            intent.putExtra(EXTRA_MESSAGE, server);
-                            startActivity(intent);
+
+
+                        new Thread(LoadData).start();
+                       // startActivity(intent);
+
+                        handler = new Handler() {
+                            public void handleMessage(android.os.Message msg) {
+
+                            }};
+
+                            //intent.putExtra(EXTRA_MESSAGE, login);
+                            //intent.putExtra(EXTRA_MESSAGE, server);
+
                             /////////////////////////////////////////////////
 
                     }
@@ -189,9 +204,9 @@ public class login_activity extends ActionBarActivity {
         return statusCode;
     }
 
-    private void getID(String region, String summonerName) throws MalformedURLException {
+    private void getJSON(String region, String summonerName) throws MalformedURLException {
 
-        String url = "httpS://eune.api.pvp.net/api/lol/" + region + "/v1.4/summoner/by-name/" + summonerName + API_KEY;
+        String url = "https://eune.api.pvp.net/api/lol/" + region + "/v1.4/summoner/by-name/" + summonerName + API_KEY;
         Log.i("Request URL", url);
         URL Url = new URL(url);
 
@@ -218,6 +233,7 @@ public class login_activity extends ActionBarActivity {
                 qResult = stringBuilder.toString();
                 Log.i("Request response", qResult);
 
+                readJSONData1(qResult);
 
             }
 
@@ -229,5 +245,52 @@ public class login_activity extends ActionBarActivity {
             e.printStackTrace();
         }
     }
+
+    private void readJSONData1(String jsonResult){
+        try
+        {
+            JSONObject JsonObjectA = new JSONObject(jsonResult);
+                JSONObject JsonSummoner = JsonObjectA.getJSONObject(login);
+                    gameStats.setSummonerID(JsonSummoner.getInt("id"));
+                    gameStats.setSummonerName(JsonSummoner.getString("name"));
+                    gameStats.setSummonerLvl(JsonSummoner.getInt("summonerLevel"));
+                    gameStats.getSummonerProfileIconID(JsonSummoner.getInt("profileIconId"));
+
+
+        }
+        catch (JSONException e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+
+
+    private Runnable LoadData = new Runnable() {
+
+        public void run(){
+
+        runOnUiThread(new Runnable() {
+            public void run() {
+                dialog = new ProgressDialog(mContext);
+                dialog.setMessage("Please Wait!!");
+                dialog.setCancelable(false);
+                dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                dialog.show();
+            }
+        });
+
+            try {
+                getJSON(regiocode, login);
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
+            runOnUiThread(new Runnable() {
+                public void run() {
+                    dialog.dismiss();
+                }
+            });
+            }
+        };
 
 }
