@@ -49,7 +49,7 @@ public class login_activity extends ActionBarActivity {
     Button search_button;
     TextView login_field, info_field;
     Spinner server_field;
-    String login, server, regiocode;
+    String login, server, regiocode, platformID;
     private MoPubView moPubView;
     public game_stats gameStats;
 
@@ -97,7 +97,8 @@ public class login_activity extends ActionBarActivity {
             if(login_field.getText().toString().length() > 0) {
                 final Intent intent = new Intent(login_activity.this, stats_activity.class);
                 login = login_field.getText().toString().toLowerCase();
-                regiocode = getRegionCode(server_field.getSelectedItem().toString());
+                getRegionCode(server_field.getSelectedItem().toString());
+
 
                 try {
                     if(checkHttpCode(regiocode, login) == 200){
@@ -148,37 +149,46 @@ public class login_activity extends ActionBarActivity {
         info_field.setText("");
     }
 
-    private String getRegionCode(String regionName){
+    private void getRegionCode(String regionName){
         String regioCode = null;
         if(regionName.equals("Brazil")){
-            return regioCode = "br";
+            regiocode = "br";
+            platformID = "BR1";
         }
         else if(regionName.equals("Europe Nordic and East")){
-            return regioCode = "eune";
+            regiocode = "eune";
+            platformID = "EUN1";
         }
         else if(regionName.equals("Europe")){
-            return regioCode = "euw";
+            regiocode = "euw";
+            platformID = "EUW1";
         }
         else if(regionName.equals("Latin America North")){
-            return regioCode = "lan";
+            regiocode = "lan";
+            platformID = "LA1";
         }
         else if(regionName.equals("North America")){
-            return regioCode = "na";
+            regiocode = "na";
+            platformID = "NA1";
         }
         else if(regionName.equals("Oceania")){
-            return regioCode = "oce";
+            regiocode = "oce";
+            platformID = "OC1";
         }
         else if(regionName.equals("Russia")){
-            return regioCode = "ru";
+            regiocode = "ru";
+            platformID = "RU";
         }
         else if(regionName.equals("Turkey")){
-            return regioCode = "tr";
+            regiocode = "tr";
+            platformID = "TR1";
         }
         else if(regionName.equals("Republic of Korea")){
-            return regioCode = "kr";
+            regiocode = "kr";
+            platformID = "KR";
         }
         Log.i("Region Code", regioCode);
-        return "";
+        Log.i("PlatformID", platformID);
 
     };
 
@@ -244,7 +254,52 @@ public class login_activity extends ActionBarActivity {
 
             e.printStackTrace();
         }
+
+        getJSON(platformID, gameStats.summonerID);
     }
+
+    private void getJSON(String platformid, int summonerid) throws MalformedURLException {
+
+        String url = "https://eune.api.pvp.net/observer-mode/rest/consumer/getSpectatorGameInfo/" + platformid + "/" + summonerid + API_KEY;
+        Log.i("Request URL", url);
+        URL Url = new URL(url);
+
+        String qResult = null;
+
+        HttpClient httpClient = new DefaultHttpClient();
+        HttpGet httpGet = new HttpGet(url);
+
+    try {
+        HttpEntity httpEntity = httpClient.execute(httpGet).getEntity();
+
+        if (httpEntity != null) {
+            InputStream inputStream = httpEntity.getContent();
+            Reader in = new InputStreamReader(inputStream);
+            BufferedReader bufferedreader = new BufferedReader(in);
+            StringBuilder stringBuilder = new StringBuilder();
+
+            String stringReadLine = null;
+
+            while ((stringReadLine = bufferedreader.readLine()) != null) {
+                stringBuilder.append(stringReadLine + "\n");
+            }
+
+            qResult = stringBuilder.toString();
+            Log.i("Request response", qResult);
+
+            readJSONData2(qResult);
+
+        }
+
+    } catch (ClientProtocolException e) {
+
+        e.printStackTrace();
+    } catch (IOException e) {
+
+        e.printStackTrace();
+    }
+
+}
 
     private void readJSONData1(String jsonResult){
         try
@@ -254,7 +309,7 @@ public class login_activity extends ActionBarActivity {
                     gameStats.setSummonerID(JsonSummoner.getInt("id"));
                     gameStats.setSummonerName(JsonSummoner.getString("name"));
                     gameStats.setSummonerLvl(JsonSummoner.getInt("summonerLevel"));
-                    gameStats.getSummonerProfileIconID(JsonSummoner.getInt("profileIconId"));
+                    gameStats.setSummonerProfileIconID(JsonSummoner.getInt("profileIconId"));
 
 
         }
@@ -263,6 +318,8 @@ public class login_activity extends ActionBarActivity {
             e.printStackTrace();
         }
     }
+
+    private void readJSONData2(String jsonResult){}
 
 
 
