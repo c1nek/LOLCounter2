@@ -149,7 +149,6 @@ public class login_activity extends ActionBarActivity {
     }
 
     private void getRegionCode(String regionName){
-        String regioCode = null;
         if(regionName.equals("Brazil")){
             regiocode = "br";
             platformID = "BR1";
@@ -186,7 +185,7 @@ public class login_activity extends ActionBarActivity {
             regiocode = "kr";
             platformID = "KR";
         }
-        Log.i("Region Code", regioCode);
+        Log.i("Region Code", regiocode);
         Log.i("PlatformID", platformID);
 
     };
@@ -198,6 +197,26 @@ public class login_activity extends ActionBarActivity {
 
         try{
             HttpURLConnection http = (HttpURLConnection)Url.openConnection();
+            statusCode = http.getResponseCode();
+            Log.i("Http status code", Integer.toString(statusCode));
+            if(statusCode != 200){
+                setInfoField("Wrong Summoner Name");
+            }
+
+        }
+        catch (Exception e) {
+
+            e.printStackTrace();
+        }
+
+        return statusCode;
+    }
+
+    private int checkHttpCode(URL url){
+        int statusCode = 0;
+
+        try{
+            HttpURLConnection http = (HttpURLConnection)url.openConnection();
             statusCode = http.getResponseCode();
             Log.i("Http status code", Integer.toString(statusCode));
             if(statusCode != 200){
@@ -263,40 +282,46 @@ public class login_activity extends ActionBarActivity {
         Log.i("Request URL", url);
         URL Url = new URL(url);
 
-        String qResult = null;
+        if(checkHttpCode(Url) == 200) {
 
-        HttpClient httpClient = new DefaultHttpClient();
-        HttpGet httpGet = new HttpGet(url);
+            String qResult = null;
 
-    try {
-        HttpEntity httpEntity = httpClient.execute(httpGet).getEntity();
+            HttpClient httpClient = new DefaultHttpClient();
+            HttpGet httpGet = new HttpGet(url);
 
-        if (httpEntity != null) {
-            InputStream inputStream = httpEntity.getContent();
-            Reader in = new InputStreamReader(inputStream);
-            BufferedReader bufferedreader = new BufferedReader(in);
-            StringBuilder stringBuilder = new StringBuilder();
+            try {
+                HttpEntity httpEntity = httpClient.execute(httpGet).getEntity();
 
-            String stringReadLine = null;
+                if (httpEntity != null) {
+                    InputStream inputStream = httpEntity.getContent();
+                    Reader in = new InputStreamReader(inputStream);
+                    BufferedReader bufferedreader = new BufferedReader(in);
+                    StringBuilder stringBuilder = new StringBuilder();
 
-            while ((stringReadLine = bufferedreader.readLine()) != null) {
-                stringBuilder.append(stringReadLine + "\n");
+                    String stringReadLine = null;
+
+                    while ((stringReadLine = bufferedreader.readLine()) != null) {
+                        stringBuilder.append(stringReadLine + "\n");
+                    }
+
+                    qResult = stringBuilder.toString();
+                    Log.i("Request response", qResult);
+
+                    readJSONData2(qResult);
+
+                }
+
+            } catch (ClientProtocolException e) {
+
+                e.printStackTrace();
+            } catch (IOException e) {
+
+                e.printStackTrace();
             }
-
-            qResult = stringBuilder.toString();
-            Log.i("Request response", qResult);
-
-            readJSONData2(qResult);
-
         }
-
-    } catch (ClientProtocolException e) {
-
-        e.printStackTrace();
-    } catch (IOException e) {
-
-        e.printStackTrace();
-    }
+        else{
+            setInfoField("There's no current game");
+        }
 
 }
 
@@ -309,6 +334,22 @@ public class login_activity extends ActionBarActivity {
                     gameStats.setSummonerName(JsonSummoner.getString("name"));
                     gameStats.setSummonerLvl(JsonSummoner.getInt("summonerLevel"));
                     gameStats.setSummonerProfileIconID(JsonSummoner.getInt("profileIconId"));
+        }
+        catch (JSONException e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+    private void readJSONData2(String jsonResult){
+        try
+        {
+            JSONObject JsonObjectA = new JSONObject(jsonResult);
+            JSONObject JsonSummoner = JsonObjectA.getJSONObject(login);
+            gameStats.setSummonerID(JsonSummoner.getInt("id"));
+            gameStats.setSummonerName(JsonSummoner.getString("name"));
+            gameStats.setSummonerLvl(JsonSummoner.getInt("summonerLevel"));
+            gameStats.setSummonerProfileIconID(JsonSummoner.getInt("profileIconId"));
 
 
         }
@@ -317,8 +358,6 @@ public class login_activity extends ActionBarActivity {
             e.printStackTrace();
         }
     }
-
-    private void readJSONData2(String jsonResult){}
 
 
 
