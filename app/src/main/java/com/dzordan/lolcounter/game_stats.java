@@ -10,7 +10,21 @@ public class game_stats {
     int summonerProfileIconID;
     int summonerLvl;
 
+    summoner_info[] summonerInfoTab;
+
     public game_stats() {
+    }
+
+    public summoner_info[] getSummonerInfoTab() {
+        return summonerInfoTab;
+    }
+
+    public void setSummonerInfoTab(summoner_info[] summonerInfoTab) {
+        this.summonerInfoTab = summonerInfoTab;
+    }
+
+    public int getSummonerProfileIconID() {
+        return summonerProfileIconID;
     }
 
     public int getSummonerID() {
