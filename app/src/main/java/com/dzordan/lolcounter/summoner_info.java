@@ -1,5 +1,13 @@
 package com.dzordan.lolcounter;
 
+import android.support.annotation.NonNull;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
+import java.util.ListIterator;
+
 /**
  * Created by Marcin on 2015-05-13.
  */
@@ -61,10 +69,27 @@ public class summoner_info {
     int profileIconID;
     int spell1ID;
     int spell2ID;
-    rune[] runesTab;
-    master[] masteriesTab;
+
+    List<rune> runesList = new ArrayList<rune>();
+    List<master> masteriesList = new ArrayList<master>();
 
     public summoner_info(){}
+
+    public List<rune> getRunesList() {
+        return runesList;
+    }
+
+    public void setRunesList(List<rune> runesList) {
+        this.runesList = runesList;
+    }
+
+    public List<master> getMasteriesList() {
+        return masteriesList;
+    }
+
+    public void setMasteriesList(List<master> masteriesList) {
+        this.masteriesList = masteriesList;
+    }
 
     public String getSummonerName() {
         return summonerName;
@@ -98,19 +123,4 @@ public class summoner_info {
         this.spell2ID = spell2ID;
     }
 
-    public rune[] getRunesTab() {
-        return runesTab;
-    }
-
-    public void setRunesTab(rune[] runesTab) {
-        this.runesTab = runesTab;
-    }
-
-    public master[] getMasteriesTab() {
-        return masteriesTab;
-    }
-
-    public void setMasteriesTab(master[] masteriesTab) {
-        this.masteriesTab = masteriesTab;
-    }
 }

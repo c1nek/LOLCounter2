@@ -7,8 +7,6 @@ import android.os.StrictMode;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -20,6 +18,8 @@ import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
+
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -342,21 +342,47 @@ public class login_activity extends ActionBarActivity {
     }
 
     private void readJSONData2(String jsonResult){
+
+        int mainTeamID = 0;
         try
         {
             JSONObject JsonObjectA = new JSONObject(jsonResult);
-            JSONObject JsonSummoner = JsonObjectA.getJSONObject(login);
-            gameStats.setSummonerID(JsonSummoner.getInt("id"));
-            gameStats.setSummonerName(JsonSummoner.getString("name"));
-            gameStats.setSummonerLvl(JsonSummoner.getInt("summonerLevel"));
-            gameStats.setSummonerProfileIconID(JsonSummoner.getInt("profileIconId"));
+            JSONArray JsonArrayParticipants = JsonObjectA.getJSONArray("participants");
 
+            gameStats.setGameType(JsonArrayParticipants.length()/2);
+            for(int i = JsonArrayParticipants.length()/2; i < JsonArrayParticipants.length(); i++) {
+                summoner_info tempSummoner = new summoner_info();
+                JSONObject JSONObject_onesummoner = JsonArrayParticipants.getJSONObject(i);
+                tempSummoner.setSpell1ID(JSONObject_onesummoner.getInt("spell1Id"));
+                tempSummoner.setSpell2ID(JSONObject_onesummoner.getInt("spell2Id"));
+                tempSummoner.setProfileIconID(JSONObject_onesummoner.getInt("profileIconId"));
+                tempSummoner.setSummonerName(JSONObject_onesummoner.getString("summonerName"));
 
+                JSONArray JsonArrayRunes = JSONObject_onesummoner.getJSONArray("runes");
+                for(int j = 0; j < JsonArrayRunes.length(); j++) {
+                    JSONObject JSONObject_onerune = JsonArrayRunes.getJSONObject(j);
+                    rune tempRune = new rune();
+                    tempRune.setRuneID(JSONObject_onerune.getInt("runeId"));
+                    tempRune.setRuneCount(JSONObject_onerune.getInt("count"));
+                    tempSummoner.runesList.add(tempRune);
+                }
+
+                JSONArray JsonArrayMasteries = JSONObject_onesummoner.getJSONArray("masteries");
+                for(int k = 0; k < JsonArrayMasteries.length(); k++) {
+                    JSONObject JSONObject_onemaster = JsonArrayMasteries.getJSONObject(k);
+                    master tempMaster = new master();
+                    tempMaster.setMasteryRank(JSONObject_onemaster.getInt("rank"));
+                    tempMaster.setMasteryID(JSONObject_onemaster.getInt("masteryId"));
+                    tempSummoner.masteriesList.add(tempMaster);
+                }
+                gameStats.summonerInfoList.add(tempSummoner);
+            }
         }
         catch (JSONException e)
         {
             e.printStackTrace();
         }
+
     }
 
 
