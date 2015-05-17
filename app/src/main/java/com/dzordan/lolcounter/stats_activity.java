@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
+import android.widget.TextView;
 
 /**
  * Created by Marcin on 2015-04-27.
@@ -12,43 +13,60 @@ import android.widget.TableRow;
 public class stats_activity extends login_activity {
 
     TableLayout table;
+    TextView champ1name_field, champ2name_field, champ3name_field, champ4name_field, champ5name_field;
+    LinearLayout linearLay4, linearLay5;
 
+    game_stats gameStatsActivity;
 
-    LinearLayout linearLay;
-    TableRow row;
-
-    View v;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.stats_activity_layout);
 
-        table = (TableLayout) findViewById(R.id.mainTable);
-        //linearLay = (LinearLayout) findViewById(R.id.linearLay);
+        gameStatsActivity = (game_stats)getIntent().getSerializableExtra("stats");
 
-        //row = (TableRow) findViewById(R.id.champLay);
+        {
+            linearLay4 = (LinearLayout) findViewById(R.id.lay4);
+            linearLay5 = (LinearLayout) findViewById(R.id.lay5);
 
-        //row.
+            table = (TableLayout) findViewById(R.id.mainTable);
+            champ1name_field = (TextView) findViewById(R.id.champ1name);
+            champ2name_field = (TextView) findViewById(R.id.champ2name);
+            champ3name_field = (TextView) findViewById(R.id.champ3name);
+            champ4name_field = (TextView) findViewById(R.id.champ4name);
+            champ5name_field = (TextView) findViewById(R.id.champ5name);
 
-        int BASEID=200;
-
-        //View v = mLayoutInflator.inflate(R.layout.myRelativeLayout, null);
 
 
-       // table.
+            checkGametype(gameStatsActivity.gameType);
+        }
 
-        // Get the message from the intent
-       // Intent intent = getIntent();
-       // String message = intent.getStringExtra(login_activity.EXTRA_MESSAGE);
 
-        // Create the text view
-       // TextView textView = new TextView(this);
-       // textView.setTextSize(40);
-        //textView.setText(message);
 
-        // Set the text view as the activity layout
-       // setContentView(textView);
+
+    }
+
+    private void checkGametype(int type){
+        if(type == 3){
+            set3v3();
+        }
+        else{
+            set5v5();
+        }
+    }
+
+    private void setVisibility (int vis){
+        linearLay4.setVisibility(vis);
+        linearLay5.setVisibility(vis);
+    }
+
+    private void set3v3(){
+        setVisibility(View.INVISIBLE);
+    }
+
+    private void set5v5(){
+        setVisibility(View.VISIBLE);
     }
 
 

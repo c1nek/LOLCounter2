@@ -72,7 +72,7 @@
             <ImageView
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:id="@+id/champImage"
+                android:id="@+id/champ1ico"
                 android:background="#ff27851c"
                 android:layout_weight="1" />
 
@@ -81,7 +81,7 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="nazwa_champa"
-                android:id="@+id/champName"
+                android:id="@+id/champ1name"
                 android:layout_marginTop="8dp"
                 android:layout_marginLeft="5dp"
                 android:layout_weight="1" />
@@ -178,7 +178,7 @@
             <ImageView
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:id="@+id/imageView"
+                android:id="@+id/champ2ico"
                 android:background="#ff27851c"
                 android:layout_weight="1" />
 
@@ -187,7 +187,7 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="nazwa_champa"
-                android:id="@+id/textView4"
+                android:id="@+id/champ2name"
                 android:layout_marginTop="8dp"
                 android:layout_marginLeft="5dp"
                 android:layout_weight="1" />
@@ -283,7 +283,7 @@
             <ImageView
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:id="@+id/imageView11"
+                android:id="@+id/champ3ico"
                 android:background="#ff27851c"
                 android:layout_weight="1" />
 
@@ -292,7 +292,7 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="nazwa_champa"
-                android:id="@+id/textView6"
+                android:id="@+id/champ3name"
                 android:layout_marginTop="8dp"
                 android:layout_marginLeft="5dp"
                 android:layout_weight="1" />
@@ -388,7 +388,7 @@
             <ImageView
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:id="@+id/imageView21"
+                android:id="@+id/champ4ico"
                 android:background="#ff27851c"
                 android:layout_weight="1" />
 
@@ -397,7 +397,7 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="nazwa_champa"
-                android:id="@+id/textView7"
+                android:id="@+id/champ4name"
                 android:layout_marginTop="8dp"
                 android:layout_marginLeft="5dp"
                 android:layout_weight="1" />
@@ -494,7 +494,7 @@
             <ImageView
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:id="@+id/imageView31"
+                android:id="@+id/champ5ico"
                 android:background="#ff27851c"
                 android:layout_weight="1" />
 
@@ -503,7 +503,7 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="nazwa_champa"
-                android:id="@+id/textView8"
+                android:id="@+id/champ5name"
                 android:layout_marginTop="8dp"
                 android:layout_marginLeft="5dp"
                 android:layout_weight="1" />

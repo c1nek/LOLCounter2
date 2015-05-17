@@ -49,7 +49,7 @@ public class login_activity extends ActionBarActivity {
     Button search_button;
     TextView login_field, info_field;
     Spinner server_field;
-    String login, server, regiocode, platformID;
+    String login, regiocode, platformID;
     private MoPubView moPubView;
     public game_stats gameStats;
 
@@ -95,10 +95,8 @@ public class login_activity extends ActionBarActivity {
     protected Button.OnClickListener buttonListener = new Button.OnClickListener() {
         public void onClick(View arg0) {
             if(login_field.getText().toString().length() > 0) {
-                final Intent intent = new Intent(login_activity.this, stats_activity.class);
                 login = login_field.getText().toString().toLowerCase();
                 getRegionCode(server_field.getSelectedItem().toString());
-
 
                 try {
                     if(checkHttpCode(regiocode, login) == 200){
@@ -106,7 +104,7 @@ public class login_activity extends ActionBarActivity {
 
 
                         new Thread(LoadData).start();
-                       // startActivity(intent);
+                       //
 
                         handler = new Handler() {
                             public void handleMessage(android.os.Message msg) {
@@ -186,8 +184,8 @@ public class login_activity extends ActionBarActivity {
             regiocode = "kr";
             platformID = "KR";
         }
-        Log.i("Region Code", regiocode);
-        Log.i("PlatformID", platformID);
+        //Log.i("Region Code", regiocode);
+        //Log.i("PlatformID", platformID);
 
     };
 
@@ -344,7 +342,6 @@ public class login_activity extends ActionBarActivity {
 
     private void readJSONData2(String jsonResult){
 
-        int mainTeamID = 0;
         try
         {
             JSONObject JsonObjectA = new JSONObject(jsonResult);
@@ -384,9 +381,11 @@ public class login_activity extends ActionBarActivity {
             e.printStackTrace();
         }
 
+        final Intent intent=new Intent(login_activity.this,stats_activity.class);
+        intent.putExtra("stats", gameStats);
+        startActivity(intent);
+
     }
-
-
 
     private Runnable LoadData = new Runnable() {
 
@@ -407,11 +406,14 @@ public class login_activity extends ActionBarActivity {
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             }
+
             runOnUiThread(new Runnable() {
                 public void run() {
                     dialog.dismiss();
                 }
             });
+
+
             }
         };
 

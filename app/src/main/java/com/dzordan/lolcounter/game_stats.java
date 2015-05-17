@@ -2,6 +2,7 @@ package com.dzordan.lolcounter;
 
 import android.support.annotation.NonNull;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
@@ -11,7 +12,7 @@ import java.util.ListIterator;
 /**
  * Created by Marcin on 2015-05-04.
  */
-public class game_stats {
+public class game_stats implements Serializable {
 
     int summonerID;
     String summonerName;
