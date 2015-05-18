@@ -2,6 +2,7 @@ package com.dzordan.lolcounter;
 
 import android.support.annotation.NonNull;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
@@ -11,7 +12,7 @@ import java.util.ListIterator;
 /**
  * Created by Marcin on 2015-05-13.
  */
-class rune{
+class rune implements Serializable{
 
     int runeID;
     int runeCount;
@@ -36,7 +37,7 @@ class rune{
 
 }
 
-class master{
+class master implements Serializable {
 
     int masteryRank;
     int masteryID;
@@ -62,7 +63,7 @@ class master{
 
 }
 
-public class summoner_info {
+public class summoner_info implements Serializable {
 
     String summonerName;
 
