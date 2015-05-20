@@ -1,5 +1,6 @@
 package com.dzordan.lolcounter;
 
+import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
 
 import java.io.Serializable;
@@ -60,12 +61,15 @@ class master implements Serializable {
         this.masteryID = masteryID;
     }
 
-
 }
 
 public class summoner_info implements Serializable {
 
     String summonerName;
+
+
+
+    byte[] summonerIcon;
 
     int profileIconID;
     int spell1ID;
@@ -73,6 +77,14 @@ public class summoner_info implements Serializable {
 
     List<rune> runesList = new ArrayList<rune>();
     List<master> masteriesList = new ArrayList<master>();
+
+    public byte[] getSummonerIcon() {
+        return summonerIcon;
+    }
+
+    public void setSummonerIcon(byte[] summonerIcon) {
+        this.summonerIcon = summonerIcon;
+    }
 
     public summoner_info(){}
 

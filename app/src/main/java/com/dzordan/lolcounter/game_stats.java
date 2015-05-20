@@ -1,13 +1,8 @@
 package com.dzordan.lolcounter;
 
-import android.support.annotation.NonNull;
-
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
 
 /**
  * Created by Marcin on 2015-05-04.
@@ -22,6 +17,9 @@ public class game_stats implements Serializable {
     int gameType;   //5- 5v5, 3- 3v3
 
     List<summoner_info> summonerInfoList = new ArrayList<summoner_info>();
+
+    public game_stats() {
+    }
 
     public int getGameType() {
         return gameType;
@@ -38,12 +36,6 @@ public class game_stats implements Serializable {
     public void setSummonerInfoList(List<summoner_info> summonerInfoList) {
         this.summonerInfoList = summonerInfoList;
     }
-
-
-    public game_stats() {
-    }
-
-
 
     public int getSummonerProfileIconID() {
         return summonerProfileIconID;

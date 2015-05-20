@@ -3,6 +3,8 @@ package com.dzordan.lolcounter;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.StrictMode;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -26,6 +28,7 @@ import org.json.JSONObject;
 import com.mopub.mobileads.MoPubView;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -33,6 +36,8 @@ import java.io.Reader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLConnection;
+
 import android.os.Handler;
 
 public class login_activity extends ActionBarActivity {
@@ -340,14 +345,14 @@ public class login_activity extends ActionBarActivity {
         }
     }
 
-    private void readJSONData2(String jsonResult){
+    private void readJSONData2(String jsonResult) throws IOException {
 
         try
         {
             JSONObject JsonObjectA = new JSONObject(jsonResult);
             JSONArray JsonArrayParticipants = JsonObjectA.getJSONArray("participants");
 
-            gameStats.setGameType(JsonArrayParticipants.length()/2);
+            gameStats.setGameType(JsonArrayParticipants.length() / 2);
             for(int i = JsonArrayParticipants.length()/2; i < JsonArrayParticipants.length(); i++) {
                 summoner_info tempSummoner = new summoner_info();
                 JSONObject JSONObject_onesummoner = JsonArrayParticipants.getJSONObject(i);
@@ -373,6 +378,8 @@ public class login_activity extends ActionBarActivity {
                     tempMaster.setMasteryID(JSONObject_onemaster.getInt("masteryId"));
                     tempSummoner.masteriesList.add(tempMaster);
                 }
+
+                tempSummoner.setSummonerIcon(getImageFromUrl(tempSummoner.getSummonerName()));
                 gameStats.summonerInfoList.add(tempSummoner);
             }
         }
@@ -385,6 +392,29 @@ public class login_activity extends ActionBarActivity {
         intent.putExtra("stats", gameStats);
         startActivity(intent);
 
+    }
+
+    private byte[] getImageFromUrl(String summonerName) throws IOException
+    {
+        String TempSummonerName = summonerName.replaceAll(" ", "%20");
+        Bitmap bitmap = null;
+        String url = "http://avatar.leagueoflegends.com/" + regiocode + "/" + TempSummonerName + ".png";
+        URL Url = new URL(url);
+
+        bitmap = BitmapFactory.decodeStream(Url.openConnection().getInputStream());
+
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        try {
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+        }
+        catch (Exception ex){
+
+        }
+
+        byte[] byteArray = stream.toByteArray();
+
+        Log.i("pobranoc ikone: ", url);
+        return byteArray;
     }
 
     private Runnable LoadData = new Runnable() {
@@ -403,7 +433,8 @@ public class login_activity extends ActionBarActivity {
 
             try {
                 getJSON(regiocode, login);
-            } catch (MalformedURLException e) {
+            }
+            catch (MalformedURLException e) {
                 e.printStackTrace();
             }
 
