@@ -19,6 +19,7 @@ public class stats_activity extends login_activity {
     TableLayout table;
     TextView[] champname_field_tab = new TextView[5];
     ImageView[] champico_filed_tab = new ImageView[5];
+    ImageView[][] spellico_field_tab = new ImageView[5][2];
     LinearLayout linearLay4, linearLay5;
 
     game_stats gameStatsActivity;
@@ -47,6 +48,17 @@ public class stats_activity extends login_activity {
             champico_filed_tab[2] = (ImageView) findViewById(R.id.champ3ico);
             champico_filed_tab[3] = (ImageView) findViewById(R.id.champ4ico);
             champico_filed_tab[4] = (ImageView) findViewById(R.id.champ5ico);
+
+            spellico_field_tab[0][0] = (ImageView) findViewById(R.id.spell11Image);
+            spellico_field_tab[0][1] = (ImageView) findViewById(R.id.spell12Image);
+            spellico_field_tab[1][0] = (ImageView) findViewById(R.id.spell21Image);
+            spellico_field_tab[1][1] = (ImageView) findViewById(R.id.spell22Image);
+            spellico_field_tab[2][0] = (ImageView) findViewById(R.id.spell31Image);
+            spellico_field_tab[2][1] = (ImageView) findViewById(R.id.spell32Image);
+            spellico_field_tab[3][0] = (ImageView) findViewById(R.id.spell41Image);
+            spellico_field_tab[3][1] = (ImageView) findViewById(R.id.spell42Image);
+            spellico_field_tab[4][0] = (ImageView) findViewById(R.id.spell51Image);
+            spellico_field_tab[4][1] = (ImageView) findViewById(R.id.spell52Image);
 
             checkGametype(gameStatsActivity.gameType);
             setChampNames();
@@ -90,6 +102,15 @@ public class stats_activity extends login_activity {
                 int imageResource = getResources().getIdentifier(imageUri, null, getPackageName());
                 Drawable res = getResources().getDrawable(imageResource);
                 champico_filed_tab[i].setImageDrawable(res);
+
+                String spell1ImageUri = "drawable/spell" + gameStatsActivity.getSummonerInfoList().get(i).getSpell1ID();
+                String spell2ImageUri = "drawable/spell" + gameStatsActivity.getSummonerInfoList().get(i).getSpell2ID();
+                int imageResourceSpell1 = getResources().getIdentifier(spell1ImageUri, null, getPackageName());
+                int imageResourceSpell2 = getResources().getIdentifier(spell2ImageUri, null, getPackageName());
+                Drawable resSpell1 = getResources().getDrawable(imageResourceSpell1);
+                Drawable resSpell2 = getResources().getDrawable(imageResourceSpell2);
+                spellico_field_tab[i][0].setImageDrawable(resSpell1);
+                spellico_field_tab[i][1].setImageDrawable(resSpell2);
             }
         }
     }
