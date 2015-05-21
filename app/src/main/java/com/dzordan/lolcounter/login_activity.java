@@ -44,7 +44,6 @@ public class login_activity extends ActionBarActivity {
     public final static String EXTRA_MESSAGE = "com.dzordan.lolcounter.stats_activity";
     private final static String API_KEY = "?api_key=7fcce4c3-93f8-4db7-bd11-16dd22ef3996";
 
-    private Handler handler;
     private ProgressDialog dialog;
     Context mContext;
 
@@ -106,7 +105,7 @@ public class login_activity extends ActionBarActivity {
                         new Thread(LoadData).start();
                        //
 
-                        handler = new Handler() {
+                        Handler handler = new Handler() {
                             public void handleMessage(android.os.Message msg) {
 
                             }};
@@ -184,10 +183,7 @@ public class login_activity extends ActionBarActivity {
             regiocode = "kr";
             platformID = "KR";
         }
-        //Log.i("Region Code", regiocode);
-        //Log.i("PlatformID", platformID);
-
-    };
+    }
 
     private int checkHttpCode(String region, String summonerName) throws MalformedURLException {
         String url = "httpS://eune.api.pvp.net/api/lol/" + region + "/v1.4/summoner/by-name/" + summonerName + API_KEY;
@@ -373,10 +369,6 @@ public class login_activity extends ActionBarActivity {
                     tempMaster.setMasteryID(JSONObject_onemaster.getInt("masteryId"));
                     tempSummoner.masteriesList.add(tempMaster);
                 }
-
-               // tempSummoner.setSummonerIcon(getImageFromUrl(tempSummoner.getSummonerName()));
-               // tempSummoner.setSummonerIcon(bitmapToByteArray(R.drawable.));
-
                 gameStats.summonerInfoList.add(tempSummoner);
             }
         }
