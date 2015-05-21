@@ -36,7 +36,6 @@ import java.io.Reader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLConnection;
 
 import android.os.Handler;
 
@@ -45,11 +44,9 @@ public class login_activity extends ActionBarActivity {
     public final static String EXTRA_MESSAGE = "com.dzordan.lolcounter.stats_activity";
     private final static String API_KEY = "?api_key=7fcce4c3-93f8-4db7-bd11-16dd22ef3996";
 
-
     private Handler handler;
     private ProgressDialog dialog;
     Context mContext;
-
 
     Button search_button;
     TextView login_field, info_field;
@@ -105,8 +102,6 @@ public class login_activity extends ActionBarActivity {
 
                 try {
                     if(checkHttpCode(regiocode, login) == 200){
-
-
 
                         new Thread(LoadData).start();
                        //
@@ -358,7 +353,7 @@ public class login_activity extends ActionBarActivity {
                 JSONObject JSONObject_onesummoner = JsonArrayParticipants.getJSONObject(i);
                 tempSummoner.setSpell1ID(JSONObject_onesummoner.getInt("spell1Id"));
                 tempSummoner.setSpell2ID(JSONObject_onesummoner.getInt("spell2Id"));
-                tempSummoner.setProfileIconID(JSONObject_onesummoner.getInt("profileIconId"));
+                tempSummoner.setChampionId(JSONObject_onesummoner.getInt("championId"));
                 tempSummoner.setSummonerName(JSONObject_onesummoner.getString("summonerName"));
 
                 JSONArray JsonArrayRunes = JSONObject_onesummoner.getJSONArray("runes");
@@ -379,7 +374,9 @@ public class login_activity extends ActionBarActivity {
                     tempSummoner.masteriesList.add(tempMaster);
                 }
 
-                tempSummoner.setSummonerIcon(getImageFromUrl(tempSummoner.getSummonerName()));
+               // tempSummoner.setSummonerIcon(getImageFromUrl(tempSummoner.getSummonerName()));
+               // tempSummoner.setSummonerIcon(bitmapToByteArray(R.drawable.));
+
                 gameStats.summonerInfoList.add(tempSummoner);
             }
         }
@@ -413,8 +410,21 @@ public class login_activity extends ActionBarActivity {
 
         byte[] byteArray = stream.toByteArray();
 
-        Log.i("pobranoc ikone: ", url);
+        Log.i("pobrano ikone: ", url);
         return byteArray;
+    }
+    private byte[] bitmapToByteArray(Bitmap bitmap){
+
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        try {
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+        }
+        catch (Exception ex){
+        }
+        byte[] byteArray = stream.toByteArray();
+
+        return byteArray;
+
     }
 
     private Runnable LoadData = new Runnable() {
@@ -443,7 +453,6 @@ public class login_activity extends ActionBarActivity {
                     dialog.dismiss();
                 }
             });
-
 
             }
         };

@@ -83,8 +83,13 @@ public class stats_activity extends login_activity {
 
         for(int i =0; i<gameStatsActivity.gameType; i++){
             if(champname_field_tab[i].getVisibility() == View.VISIBLE){
+
                 champname_field_tab[i].setText(gameStatsActivity.getSummonerInfoList().get(i).summonerName);
-                champico_filed_tab[i].setBackground(arrayToDrawable(gameStatsActivity.getSummonerInfoList().get(i).getSummonerIcon()));
+
+                String imageUri = "drawable/ico" + gameStatsActivity.getSummonerInfoList().get(i).getChampionId();
+                int imageResource = getResources().getIdentifier(imageUri, null, getPackageName());
+                Drawable res = getResources().getDrawable(imageResource);
+                champico_filed_tab[i].setImageDrawable(res);
             }
         }
     }

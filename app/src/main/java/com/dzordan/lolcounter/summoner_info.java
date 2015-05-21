@@ -71,7 +71,7 @@ public class summoner_info implements Serializable {
 
     byte[] summonerIcon;
 
-    int profileIconID;
+    int championId;
     int spell1ID;
     int spell2ID;
 
@@ -112,12 +112,12 @@ public class summoner_info implements Serializable {
         this.summonerName = summonerName;
     }
 
-    public int getProfileIconID() {
-        return profileIconID;
+    public int getChampionId() {
+        return championId;
     }
 
-    public void setProfileIconID(int profileIconID) {
-        this.profileIconID = profileIconID;
+    public void setChampionId(int championId) {
+        this.championId = championId;
     }
 
     public int getSpell1ID() {
