@@ -42,7 +42,7 @@ import android.os.Handler;
 public class login_activity extends ActionBarActivity {
 
     public final static String EXTRA_MESSAGE = "com.dzordan.lolcounter.stats_activity";
-    private final static String API_KEY = "?api_key=7fcce4c3-93f8-4db7-bd11-16dd22ef3996";
+    private final static String API_KEY = "?api_key=a0e758ec-1ca2-4d91-9d2c-7ab15dd80ba9";
 
     private ProgressDialog dialog;
     Context mContext;
@@ -426,7 +426,7 @@ public class login_activity extends ActionBarActivity {
         runOnUiThread(new Runnable() {
             public void run() {
                 dialog = new ProgressDialog(mContext);
-                dialog.setMessage("Please Wait!!");
+                dialog.setMessage("Please Wait!");
                 dialog.setCancelable(false);
                 dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
                 dialog.show();
