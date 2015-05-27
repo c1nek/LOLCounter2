@@ -65,18 +65,36 @@ class master implements Serializable {
 
 public class summoner_info implements Serializable {
 
+
     String summonerName;
-
-
 
     byte[] summonerIcon;
 
     int championId;
     int spell1ID;
+    int spell1Cooldown;
     int spell2ID;
+    int spell2Cooldown;
 
     List<rune> runesList = new ArrayList<rune>();
     List<master> masteriesList = new ArrayList<master>();
+
+    public int getSpell1Cooldown() {
+        return spell1Cooldown;
+    }
+
+    public void setSpell1Cooldown(int spell1Cooldown) {
+        this.spell1Cooldown = spell1Cooldown;
+    }
+
+    public int getSpell2Cooldown() {
+        return spell2Cooldown;
+    }
+
+    public void setSpell2Cooldown(int spell2Cooldown) {
+        this.spell2Cooldown = spell2Cooldown;
+    }
+
 
     public byte[] getSummonerIcon() {
         return summonerIcon;

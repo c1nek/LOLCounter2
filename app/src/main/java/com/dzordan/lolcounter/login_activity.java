@@ -42,7 +42,22 @@ import android.os.Handler;
 public class login_activity extends ActionBarActivity {
 
     public final static String EXTRA_MESSAGE = "com.dzordan.lolcounter.stats_activity";
-    private final static String API_KEY = "?api_key=a0e758ec-1ca2-4d91-9d2c-7ab15dd80ba9";
+    private final static String API_KEY = "?api_key=700cdfd7-7c9c-4c66-873a-f8eb5e1b4125";
+
+    private final static int[][] spellsValues = new int[][]{
+            {1, 210},
+            {2, 60},
+            {3, 210},
+            {4, 300},
+            {6, 210},
+            {7, 240},
+            {11, 60},
+            {12, 300},
+            {13, 180},
+            {14, 210},
+            {17, 210},
+            {21, 210}
+    };
 
     private ProgressDialog dialog;
     Context mContext;
@@ -74,7 +89,6 @@ public class login_activity extends ActionBarActivity {
         moPubView.setAdUnitId("db2f44af0f2a44f5b8a1ef45b9c15307");
         moPubView.loadAd();
        // moPubView.setBannerAdListener(this);
-
 
         gameStats = new game_stats();
 
@@ -110,7 +124,7 @@ public class login_activity extends ActionBarActivity {
 
                             }};
 
-                            //intent.putExtra(EXTRA_MESSAGE, login);
+                           // intent.putExtra(EXTRA_MESSAGE, login);
                             //intent.putExtra(EXTRA_MESSAGE, server);
 
                             /////////////////////////////////////////////////
@@ -196,14 +210,13 @@ public class login_activity extends ActionBarActivity {
             Log.i("Http status code", Integer.toString(statusCode));
             if(statusCode != 200){
                 setInfoField("Wrong Summoner Name");
+                Log.i("Http status code", Integer.toString(statusCode));
             }
-
         }
         catch (Exception e) {
 
             e.printStackTrace();
         }
-
         return statusCode;
     }
 
@@ -214,8 +227,10 @@ public class login_activity extends ActionBarActivity {
             HttpURLConnection http = (HttpURLConnection)url.openConnection();
             statusCode = http.getResponseCode();
             Log.i("Http status code", Integer.toString(statusCode));
+            setInfoField("Http status code"+ Integer.toString(statusCode));
             if(statusCode != 200){
                 setInfoField("Wrong Summoner Name");
+                Log.i("Http status code", Integer.toString(statusCode));
             }
 
         }
@@ -348,7 +363,9 @@ public class login_activity extends ActionBarActivity {
                 summoner_info tempSummoner = new summoner_info();
                 JSONObject JSONObject_onesummoner = JsonArrayParticipants.getJSONObject(i);
                 tempSummoner.setSpell1ID(JSONObject_onesummoner.getInt("spell1Id"));
+                tempSummoner.setSpell1Cooldown(setSpellValue(tempSummoner.getSpell1ID()));
                 tempSummoner.setSpell2ID(JSONObject_onesummoner.getInt("spell2Id"));
+                tempSummoner.setSpell2Cooldown(setSpellValue(tempSummoner.getSpell2ID()));
                 tempSummoner.setChampionId(JSONObject_onesummoner.getInt("championId"));
                 tempSummoner.setSummonerName(JSONObject_onesummoner.getString("summonerName"));
 
@@ -378,9 +395,19 @@ public class login_activity extends ActionBarActivity {
         }
 
         final Intent intent=new Intent(login_activity.this,stats_activity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         intent.putExtra("stats", gameStats);
         startActivity(intent);
 
+    }
+
+    private int setSpellValue(int spellID){
+        for(int i = 0 ; i < 12; i++){
+            if(spellsValues[i][0] == spellID){
+                return spellsValues[i][1];
+            }
+        }
+        return 0;
     }
 
     private byte[] getImageFromUrl(String summonerName) throws IOException
