@@ -35,7 +35,6 @@ class rune implements Serializable{
     public void setRuneCount(int runeCount) {
         this.runeCount = runeCount;
     }
-
 }
 
 class master implements Serializable {
@@ -60,11 +59,9 @@ class master implements Serializable {
     public void setMasteryID(int masteryID) {
         this.masteryID = masteryID;
     }
-
 }
 
 public class summoner_info implements Serializable {
-
 
     String summonerName;
 
@@ -73,11 +70,30 @@ public class summoner_info implements Serializable {
     int championId;
     int spell1ID;
     int spell1Cooldown;
+    double spell1CooldownX;
     int spell2ID;
     int spell2Cooldown;
+    double spell2CooldownX;
 
     List<rune> runesList = new ArrayList<rune>();
     List<master> masteriesList = new ArrayList<master>();
+
+
+    public double getSpell2CooldownX() {
+        return spell2CooldownX;
+    }
+
+    public void setSpell2CooldownX(double spell2CooldownX) {
+        this.spell2CooldownX = spell2CooldownX;
+    }
+
+    public double getSpell1CooldownX() {
+        return spell1CooldownX;
+    }
+
+    public void setSpell1CooldownX(double spell1CooldownX) {
+        this.spell1CooldownX = spell1CooldownX;
+    }
 
     public int getSpell1Cooldown() {
         return spell1Cooldown;
@@ -87,14 +103,13 @@ public class summoner_info implements Serializable {
         this.spell1Cooldown = spell1Cooldown;
     }
 
-    public int getSpell2Cooldown() {
+    public double getSpell2Cooldown() {
         return spell2Cooldown;
     }
 
     public void setSpell2Cooldown(int spell2Cooldown) {
         this.spell2Cooldown = spell2Cooldown;
     }
-
 
     public byte[] getSummonerIcon() {
         return summonerIcon;

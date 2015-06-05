@@ -5,9 +5,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Bundle;
+import android.os.Handler;
 import android.os.StrictMode;
 import android.support.v7.app.ActionBarActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -15,17 +16,19 @@ import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.mopub.mobileads.MoPubView;
+
 import org.apache.http.HttpEntity;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.mopub.mobileads.MoPubView;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
@@ -37,7 +40,43 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import android.os.Handler;
+class runesValues{
+    int ID;
+    double value;
+    boolean lvl;
+    double valueLvl;
+
+    public boolean isLvl() {
+        return lvl;
+    }
+
+    public void setLvl(boolean lvl) {
+        this.lvl = lvl;
+    }
+
+    public int getID() {
+        return ID;
+    }
+
+    public void setID(int ID) {
+        this.ID = ID;
+    }
+
+    public double getValue() {
+        return value;
+    }
+
+    public void setValue(double value) {
+        this.value = value;
+    }
+
+    public runesValues(int ID, double value, boolean lvl, double valueLvl) {
+        this.ID = ID;
+        this.value = value;
+        this.lvl = lvl;
+        this.valueLvl = valueLvl;
+    }
+}
 
 public class login_activity extends ActionBarActivity {
 
@@ -57,6 +96,28 @@ public class login_activity extends ActionBarActivity {
             {14, 210},
             {17, 210},
             {21, 210}
+    };
+
+    private final static double[][] runesValuesTab = new double[][]{
+            {5021, 0.11},
+            {5143, 0.16},
+            {5265, 0.2},
+            {5051, 0.47},
+            {5052, 0.93},
+            {5051, 0.67},
+            {5174, 1.3},
+            {5051, 0.83},
+            {5174, 1.67},
+            {5081, 0.2},
+            {5203, 0.29},
+            {5325, 0.36},
+            {5111, 1.4},
+            {5112, 2.8},
+            {5233, 1.95},
+            {5234, 3.9},
+            {5233, 2.5},
+            {5234, (double) 5}
+            //18
     };
 
     private ProgressDialog dialog;
@@ -84,6 +145,18 @@ public class login_activity extends ActionBarActivity {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
         }
+
+       // AdView adView=(AdView) findViewById(R.id.myAdView);
+
+        //adView.setBannerType(AdView.BANNER_TYPE_IN_APP_AD);
+        //adView.setBannerAnimation(AdView.ANIMATION_TYPE_FADE);
+        //adView.showMRinInApp(false);
+        //adView.setNewAdListener(this);
+        //adView.loadAd();
+
+        AdView mAdView = (AdView) findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
 
         moPubView = (MoPubView) findViewById(R.id.adview);
         moPubView.setAdUnitId("db2f44af0f2a44f5b8a1ef45b9c15307");
@@ -227,7 +300,7 @@ public class login_activity extends ActionBarActivity {
             HttpURLConnection http = (HttpURLConnection)url.openConnection();
             statusCode = http.getResponseCode();
             Log.i("Http status code", Integer.toString(statusCode));
-            setInfoField("Http status code"+ Integer.toString(statusCode));
+            setInfoField("Http status code" + Integer.toString(statusCode));
             if(statusCode != 200){
                 setInfoField("Wrong Summoner Name");
                 Log.i("Http status code", Integer.toString(statusCode));
@@ -364,8 +437,10 @@ public class login_activity extends ActionBarActivity {
                 JSONObject JSONObject_onesummoner = JsonArrayParticipants.getJSONObject(i);
                 tempSummoner.setSpell1ID(JSONObject_onesummoner.getInt("spell1Id"));
                 tempSummoner.setSpell1Cooldown(setSpellValue(tempSummoner.getSpell1ID()));
+                tempSummoner.setSpell1CooldownX((setSpellValue(tempSummoner.getSpell1ID())));
                 tempSummoner.setSpell2ID(JSONObject_onesummoner.getInt("spell2Id"));
                 tempSummoner.setSpell2Cooldown(setSpellValue(tempSummoner.getSpell2ID()));
+                tempSummoner.setSpell2CooldownX((setSpellValue(tempSummoner.getSpell2ID())));
                 tempSummoner.setChampionId(JSONObject_onesummoner.getInt("championId"));
                 tempSummoner.setSummonerName(JSONObject_onesummoner.getString("summonerName"));
 
@@ -375,6 +450,11 @@ public class login_activity extends ActionBarActivity {
                     rune tempRune = new rune();
                     tempRune.setRuneID(JSONObject_onerune.getInt("runeId"));
                     tempRune.setRuneCount(JSONObject_onerune.getInt("count"));
+                    double runevalue = setRunesValues(tempRune);
+                    if(runevalue != 0){
+                        tempSummoner.setSpell1CooldownX((tempSummoner.getSpell1CooldownX()*(1-runevalue)));
+                        tempSummoner.setSpell2CooldownX((tempSummoner.getSpell2CooldownX()*(1-runevalue)));
+                    }
                     tempSummoner.runesList.add(tempRune);
                 }
 
@@ -410,8 +490,17 @@ public class login_activity extends ActionBarActivity {
         return 0;
     }
 
-    private byte[] getImageFromUrl(String summonerName) throws IOException
-    {
+    public double setRunesValues(rune Rune){
+        for(int i = 0; i<18; i++){
+            if(Rune.getRuneID() == runesValuesTab[i][0]){
+                return runesValuesTab[i][1];
+            }
+
+        }
+        return 0;
+    }
+
+    private byte[] getImageFromUrl(String summonerName) throws IOException {
         String TempSummonerName = summonerName.replaceAll(" ", "%20");
         Bitmap bitmap = null;
         String url = "http://avatar.leagueoflegends.com/" + regiocode + "/" + TempSummonerName + ".png";
@@ -432,6 +521,7 @@ public class login_activity extends ActionBarActivity {
         Log.i("pobrano ikone: ", url);
         return byteArray;
     }
+
     private byte[] bitmapToByteArray(Bitmap bitmap){
 
         ByteArrayOutputStream stream = new ByteArrayOutputStream();

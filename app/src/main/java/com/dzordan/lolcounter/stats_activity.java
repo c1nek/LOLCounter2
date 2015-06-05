@@ -88,7 +88,7 @@ public class stats_activity extends login_activity {
             switch(v.getId()) {
                 case R.id.spell11Image:
                     spellico_field_tab[0][0].setClickable(false);
-                    new CountDownTimer(gameStatsActivity.getSummonerInfoList().get(0).getSpell1Cooldown()*1000, 1000) {
+                    new CountDownTimer((int)gameStatsActivity.getSummonerInfoList().get(0).getSpell1CooldownX()*1000, 1000) {
 
                         public void onTick(long millisUntilFinished) {
                             Log.i("seconds remaining: ", String.valueOf(millisUntilFinished));
@@ -98,14 +98,14 @@ public class stats_activity extends login_activity {
                         public void onFinish() {
                             vibra(300);
                             spellico_field_tab[0][0].setClickable(true);
-                            int cooldown = gameStatsActivity.getSummonerInfoList().get(0).getSpell1Cooldown();
+                            int cooldown = (int)gameStatsActivity.getSummonerInfoList().get(0).getSpell1CooldownX();
                             spellico_field_tab[0][0].setText(String.valueOf(cooldown));
                         }
                     }.start();
                     break;
                 case R.id.spell12Image:
                     spellico_field_tab[0][1].setClickable(false);
-                    new CountDownTimer(gameStatsActivity.getSummonerInfoList().get(0).getSpell2Cooldown()*1000, 1000) {
+                    new CountDownTimer((int)gameStatsActivity.getSummonerInfoList().get(0).getSpell2CooldownX()*1000, 1000) {
 
                         public void onTick(long millisUntilFinished) {
                             Log.i("seconds remaining: ", String.valueOf(millisUntilFinished));
@@ -115,14 +115,14 @@ public class stats_activity extends login_activity {
                         public void onFinish() {
                             vibra(300);
                             spellico_field_tab[0][1].setClickable(true);
-                            int cooldown = gameStatsActivity.getSummonerInfoList().get(0).getSpell2Cooldown();
+                            int cooldown = (int)gameStatsActivity.getSummonerInfoList().get(0).getSpell2CooldownX();
                             spellico_field_tab[0][1].setText(String.valueOf(cooldown));
                         }
                     }.start();
                     break;
                 case R.id.spell21Image:
                     spellico_field_tab[1][0].setClickable(false);
-                    new CountDownTimer(gameStatsActivity.getSummonerInfoList().get(1).getSpell1Cooldown()*1000, 1000) {
+                    new CountDownTimer((int)gameStatsActivity.getSummonerInfoList().get(1).getSpell1CooldownX()*1000, 1000) {
 
                         public void onTick(long millisUntilFinished) {
                             Log.i("seconds remaining: ", String.valueOf(millisUntilFinished));
@@ -132,14 +132,14 @@ public class stats_activity extends login_activity {
                         public void onFinish() {
                             vibra(300);
                             spellico_field_tab[1][0].setClickable(true);
-                            int cooldown = gameStatsActivity.getSummonerInfoList().get(1).getSpell1Cooldown();
+                            int cooldown = (int)gameStatsActivity.getSummonerInfoList().get(1).getSpell1CooldownX();
                             spellico_field_tab[1][0].setText(String.valueOf(cooldown));
                         }
                     }.start();
                     break;
                 case R.id.spell22Image:
                     spellico_field_tab[1][1].setClickable(false);
-                    new CountDownTimer(gameStatsActivity.getSummonerInfoList().get(1).getSpell2Cooldown()*1000, 1000) {
+                    new CountDownTimer((int)gameStatsActivity.getSummonerInfoList().get(1).getSpell2CooldownX()*1000, 1000) {
 
                         public void onTick(long millisUntilFinished) {
                             Log.i("seconds remaining: ", String.valueOf(millisUntilFinished));
@@ -149,14 +149,14 @@ public class stats_activity extends login_activity {
                         public void onFinish() {
                             vibra(300);
                             spellico_field_tab[1][1].setClickable(true);
-                            int cooldown = gameStatsActivity.getSummonerInfoList().get(1).getSpell2Cooldown();
+                            int cooldown = (int)gameStatsActivity.getSummonerInfoList().get(1).getSpell2CooldownX();
                             spellico_field_tab[1][1].setText(String.valueOf(cooldown));
                         }
                     }.start();
                     break;
                 case R.id.spell31Image:
                     spellico_field_tab[2][0].setClickable(false);
-                    new CountDownTimer(gameStatsActivity.getSummonerInfoList().get(2).getSpell1Cooldown()*1000, 1000) {
+                    new CountDownTimer((int)gameStatsActivity.getSummonerInfoList().get(2).getSpell1CooldownX()*1000, 1000) {
 
                         public void onTick(long millisUntilFinished) {
                             Log.i("seconds remaining: ", String.valueOf(millisUntilFinished));
@@ -166,14 +166,14 @@ public class stats_activity extends login_activity {
                         public void onFinish() {
                             vibra(300);
                             spellico_field_tab[2][0].setClickable(true);
-                            int cooldown = gameStatsActivity.getSummonerInfoList().get(2).getSpell1Cooldown();
+                            int cooldown = (int)gameStatsActivity.getSummonerInfoList().get(2).getSpell1CooldownX();
                             spellico_field_tab[2][0].setText(String.valueOf(cooldown));
                         }
                     }.start();
                     break;
                 case R.id.spell32Image:
                     spellico_field_tab[2][1].setClickable(false);
-                    new CountDownTimer(gameStatsActivity.getSummonerInfoList().get(2).getSpell2Cooldown()*1000, 1000) {
+                    new CountDownTimer((int)gameStatsActivity.getSummonerInfoList().get(2).getSpell2CooldownX()*1000, 1000) {
 
                         public void onTick(long millisUntilFinished) {
                             Log.i("seconds remaining: ", String.valueOf(millisUntilFinished));
@@ -183,14 +183,14 @@ public class stats_activity extends login_activity {
                         public void onFinish() {
                             vibra(300);
                             spellico_field_tab[2][1].setClickable(true);
-                            int cooldown = gameStatsActivity.getSummonerInfoList().get(2).getSpell2Cooldown();
+                            int cooldown = (int)gameStatsActivity.getSummonerInfoList().get(2).getSpell2CooldownX();
                             spellico_field_tab[2][1].setText(String.valueOf(cooldown));
                         }
                     }.start();
                     break;
                 case R.id.spell41Image:
                     spellico_field_tab[3][0].setClickable(false);
-                    new CountDownTimer(gameStatsActivity.getSummonerInfoList().get(3).getSpell1Cooldown()*1000, 1000) {
+                    new CountDownTimer((int)gameStatsActivity.getSummonerInfoList().get(3).getSpell1CooldownX()*1000, 1000) {
 
                         public void onTick(long millisUntilFinished) {
                             Log.i("seconds remaining: ", String.valueOf(millisUntilFinished));
@@ -200,14 +200,14 @@ public class stats_activity extends login_activity {
                         public void onFinish() {
                             vibra(300);
                             spellico_field_tab[3][0].setClickable(true);
-                            int cooldown = gameStatsActivity.getSummonerInfoList().get(3).getSpell1Cooldown();
+                            int cooldown = (int)gameStatsActivity.getSummonerInfoList().get(3).getSpell1CooldownX();
                             spellico_field_tab[3][0].setText(String.valueOf(cooldown));
                         }
                     }.start();
                     break;
                 case R.id.spell42Image:
                     spellico_field_tab[3][1].setClickable(false);
-                    new CountDownTimer(gameStatsActivity.getSummonerInfoList().get(3).getSpell2Cooldown()*1000, 1000) {
+                    new CountDownTimer((int)gameStatsActivity.getSummonerInfoList().get(3).getSpell2CooldownX()*1000, 1000) {
 
                         public void onTick(long millisUntilFinished) {
                             Log.i("seconds remaining: ", String.valueOf(millisUntilFinished));
@@ -217,14 +217,14 @@ public class stats_activity extends login_activity {
                         public void onFinish() {
                             vibra(300);
                             spellico_field_tab[3][1].setClickable(true);
-                            int cooldown = gameStatsActivity.getSummonerInfoList().get(3).getSpell2Cooldown();
+                            int cooldown = (int)gameStatsActivity.getSummonerInfoList().get(3).getSpell2CooldownX();
                             spellico_field_tab[3][1].setText(String.valueOf(cooldown));
                         }
                     }.start();
                     break;
                 case R.id.spell51Image:
                     spellico_field_tab[4][0].setClickable(false);
-                    new CountDownTimer(gameStatsActivity.getSummonerInfoList().get(4).getSpell1Cooldown()*1000, 1000) {
+                    new CountDownTimer((int)gameStatsActivity.getSummonerInfoList().get(4).getSpell1CooldownX()*1000, 1000) {
 
                         public void onTick(long millisUntilFinished) {
                             Log.i("seconds remaining: ", String.valueOf(millisUntilFinished));
@@ -234,14 +234,14 @@ public class stats_activity extends login_activity {
                         public void onFinish() {
                             vibra(300);
                             spellico_field_tab[4][0].setClickable(true);
-                            int cooldown = gameStatsActivity.getSummonerInfoList().get(4).getSpell1Cooldown();
+                            int cooldown = (int)gameStatsActivity.getSummonerInfoList().get(4).getSpell1CooldownX();
                             spellico_field_tab[4][0].setText(String.valueOf(cooldown));
                         }
                     }.start();
                     break;
                 case R.id.spell52Image:
                     spellico_field_tab[4][1].setClickable(false);
-                    new CountDownTimer(gameStatsActivity.getSummonerInfoList().get(4).getSpell2Cooldown()*1000, 1000) {
+                    new CountDownTimer((int)gameStatsActivity.getSummonerInfoList().get(4).getSpell2CooldownX()*1000, 1000) {
 
                         public void onTick(long millisUntilFinished) {
                             Log.i("seconds remaining: ", String.valueOf(millisUntilFinished));
@@ -251,7 +251,7 @@ public class stats_activity extends login_activity {
                         public void onFinish() {
                             vibra(300);
                             spellico_field_tab[4][1].setClickable(true);
-                            int cooldown = gameStatsActivity.getSummonerInfoList().get(4).getSpell2Cooldown();
+                            int cooldown = (int)gameStatsActivity.getSummonerInfoList().get(4).getSpell2CooldownX();
                             spellico_field_tab[4][1].setText(String.valueOf(cooldown));
                         }
                     }.start();
@@ -307,11 +307,11 @@ public class stats_activity extends login_activity {
                 Drawable resSpell1 = getResources().getDrawable(imageResourceSpell1);
                 Drawable resSpell2 = getResources().getDrawable(imageResourceSpell2);
                 spellico_field_tab[i][0].setBackground(resSpell1);
-                int cooldown1 = gameStatsActivity.getSummonerInfoList().get(i).getSpell1Cooldown();
+                int cooldown1 = (int)gameStatsActivity.getSummonerInfoList().get(i).getSpell1Cooldown();
                 spellico_field_tab[i][0].setText(String.valueOf(cooldown1));
                 spellico_field_tab[i][0].setShadowLayer(10, 2, 2, Color.BLACK);
                 spellico_field_tab[i][1].setBackground(resSpell2);
-                int cooldown2 = gameStatsActivity.getSummonerInfoList().get(i).getSpell2Cooldown();
+                int cooldown2 = (int)gameStatsActivity.getSummonerInfoList().get(i).getSpell2Cooldown();
                 spellico_field_tab[i][1].setText(String.valueOf(cooldown2));
                 spellico_field_tab[i][1].setShadowLayer(10, 2, 2, Color.BLACK);
             }

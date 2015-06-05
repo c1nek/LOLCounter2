@@ -16,4 +16,7 @@
         <item>Turkey</item>
         <item>Republic of Korea</item>
     </string-array>
+
+
+    <string name="banner_ad_unit_id">ca-app-pub-0550874854139886/4440501610</string>
 </resources>
