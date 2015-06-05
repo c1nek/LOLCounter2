@@ -54,6 +54,7 @@
             android:layout_weight="2.9"
             android:textAlignment="center"
             android:gravity="center" />
+
     </TableRow>
 
     <LinearLayout

@@ -11,15 +11,21 @@ import android.os.CountDownTimer;
 import android.os.Vibrator;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TextView;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.InterstitialAd;
+
 /**
  * Created by Marcin on 2015-04-27.
  */
 public class stats_activity extends login_activity {
+
+    InterstitialAd mInterstitialAd;
 
     TableLayout table;
     TextView[] champname_field_tab = new TextView[5];
@@ -31,11 +37,16 @@ public class stats_activity extends login_activity {
 
     Vibrator vibra;
 
+    int backPressCount = 0;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.stats_activity_layout);
+
+        mInterstitialAd = new InterstitialAd(this);
+        mInterstitialAd.setAdUnitId("ca-app-pub-0550874854139886/2307097219");
+        requestNewInterstitial();
 
         gameStatsActivity = (game_stats)getIntent().getSerializableExtra("stats");
 
@@ -82,6 +93,31 @@ public class stats_activity extends login_activity {
         }
     }
 
+    @Override
+    public void onBackPressed(){
+        if(backPressCount==0){
+            if (mInterstitialAd.isLoaded()) {
+                backPressCount++;
+                mInterstitialAd.show();
+            }
+            else {
+                finish();
+            }
+        }
+        else {
+            finish();
+        }
+
+    }
+
+    private void requestNewInterstitial() {
+        AdRequest adRequest = new AdRequest.Builder()
+                .addTestDevice("YOUR_DEVICE_HASH")
+                .build();
+
+        mInterstitialAd.loadAd(adRequest);
+    }
+
     View.OnClickListener spellClickHandler = new View.OnClickListener() {
         public void onClick(View v) {
             vibra(50);
@@ -91,7 +127,6 @@ public class stats_activity extends login_activity {
                     new CountDownTimer((int)gameStatsActivity.getSummonerInfoList().get(0).getSpell1CooldownX()*1000, 1000) {
 
                         public void onTick(long millisUntilFinished) {
-                            Log.i("seconds remaining: ", String.valueOf(millisUntilFinished));
                             spellico_field_tab[0][0].setText(String.valueOf(millisUntilFinished / 1000));
                         }
 
@@ -108,7 +143,6 @@ public class stats_activity extends login_activity {
                     new CountDownTimer((int)gameStatsActivity.getSummonerInfoList().get(0).getSpell2CooldownX()*1000, 1000) {
 
                         public void onTick(long millisUntilFinished) {
-                            Log.i("seconds remaining: ", String.valueOf(millisUntilFinished));
                             spellico_field_tab[0][1].setText(String.valueOf(millisUntilFinished / 1000));
                         }
 
@@ -125,7 +159,6 @@ public class stats_activity extends login_activity {
                     new CountDownTimer((int)gameStatsActivity.getSummonerInfoList().get(1).getSpell1CooldownX()*1000, 1000) {
 
                         public void onTick(long millisUntilFinished) {
-                            Log.i("seconds remaining: ", String.valueOf(millisUntilFinished));
                             spellico_field_tab[1][0].setText(String.valueOf(millisUntilFinished / 1000));
                         }
 
@@ -142,7 +175,6 @@ public class stats_activity extends login_activity {
                     new CountDownTimer((int)gameStatsActivity.getSummonerInfoList().get(1).getSpell2CooldownX()*1000, 1000) {
 
                         public void onTick(long millisUntilFinished) {
-                            Log.i("seconds remaining: ", String.valueOf(millisUntilFinished));
                             spellico_field_tab[1][1].setText(String.valueOf(millisUntilFinished / 1000));
                         }
 
@@ -159,7 +191,6 @@ public class stats_activity extends login_activity {
                     new CountDownTimer((int)gameStatsActivity.getSummonerInfoList().get(2).getSpell1CooldownX()*1000, 1000) {
 
                         public void onTick(long millisUntilFinished) {
-                            Log.i("seconds remaining: ", String.valueOf(millisUntilFinished));
                             spellico_field_tab[2][0].setText(String.valueOf(millisUntilFinished / 1000));
                         }
 
@@ -176,7 +207,6 @@ public class stats_activity extends login_activity {
                     new CountDownTimer((int)gameStatsActivity.getSummonerInfoList().get(2).getSpell2CooldownX()*1000, 1000) {
 
                         public void onTick(long millisUntilFinished) {
-                            Log.i("seconds remaining: ", String.valueOf(millisUntilFinished));
                             spellico_field_tab[2][1].setText(String.valueOf(millisUntilFinished / 1000));
                         }
 
@@ -193,7 +223,6 @@ public class stats_activity extends login_activity {
                     new CountDownTimer((int)gameStatsActivity.getSummonerInfoList().get(3).getSpell1CooldownX()*1000, 1000) {
 
                         public void onTick(long millisUntilFinished) {
-                            Log.i("seconds remaining: ", String.valueOf(millisUntilFinished));
                             spellico_field_tab[3][0].setText(String.valueOf(millisUntilFinished / 1000));
                         }
 
@@ -210,7 +239,6 @@ public class stats_activity extends login_activity {
                     new CountDownTimer((int)gameStatsActivity.getSummonerInfoList().get(3).getSpell2CooldownX()*1000, 1000) {
 
                         public void onTick(long millisUntilFinished) {
-                            Log.i("seconds remaining: ", String.valueOf(millisUntilFinished));
                             spellico_field_tab[3][1].setText(String.valueOf(millisUntilFinished / 1000));
                         }
 
@@ -227,7 +255,6 @@ public class stats_activity extends login_activity {
                     new CountDownTimer((int)gameStatsActivity.getSummonerInfoList().get(4).getSpell1CooldownX()*1000, 1000) {
 
                         public void onTick(long millisUntilFinished) {
-                            Log.i("seconds remaining: ", String.valueOf(millisUntilFinished));
                             spellico_field_tab[4][0].setText(String.valueOf(millisUntilFinished / 1000));
                         }
 
@@ -244,7 +271,6 @@ public class stats_activity extends login_activity {
                     new CountDownTimer((int)gameStatsActivity.getSummonerInfoList().get(4).getSpell2CooldownX()*1000, 1000) {
 
                         public void onTick(long millisUntilFinished) {
-                            Log.i("seconds remaining: ", String.valueOf(millisUntilFinished));
                             spellico_field_tab[4][1].setText(String.valueOf(millisUntilFinished / 1000));
                         }
 
