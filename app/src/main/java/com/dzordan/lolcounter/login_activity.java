@@ -163,6 +163,7 @@ public class login_activity extends ActionBarActivity {
         moPubView.loadAd();
        // moPubView.setBannerAdListener(this);
 
+
         gameStats = new game_stats();
 
         login_field = (TextView)findViewById(R.id.login_field);

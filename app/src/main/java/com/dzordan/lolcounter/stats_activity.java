@@ -1,6 +1,7 @@
 package com.dzordan.lolcounter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -9,9 +10,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Vibrator;
-import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TableLayout;
@@ -30,7 +29,8 @@ public class stats_activity extends login_activity {
     TableLayout table;
     TextView[] champname_field_tab = new TextView[5];
     ImageView[] champico_filed_tab = new ImageView[5];
-    TextView [][] spellico_field_tab = new TextView[5][2];
+    TextView[][] spellico_field_tab = new TextView[5][2];
+    ImageView[][] items_tab = new ImageView[5][6];
     LinearLayout linearLay4, linearLay5;
 
     game_stats gameStatsActivity;
@@ -38,6 +38,8 @@ public class stats_activity extends login_activity {
     Vibrator vibra;
 
     int backPressCount = 0;
+
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -87,6 +89,67 @@ public class stats_activity extends login_activity {
             spellico_field_tab[4][0].setOnClickListener(spellClickHandler);
             spellico_field_tab[4][1] = (TextView) findViewById(R.id.spell52Image);
             spellico_field_tab[4][1].setOnClickListener(spellClickHandler);
+
+            items_tab[0][0] = (ImageView) findViewById(R.id.item11);
+            items_tab[0][0].setOnClickListener(itemClickHandler);
+            items_tab[0][1] = (ImageView) findViewById(R.id.item12);
+            items_tab[0][1].setOnClickListener(itemClickHandler);
+            items_tab[0][2] = (ImageView) findViewById(R.id.item13);
+            items_tab[0][2].setOnClickListener(itemClickHandler);
+            items_tab[0][3] = (ImageView) findViewById(R.id.item14);
+            items_tab[0][3].setOnClickListener(itemClickHandler);
+            items_tab[0][4] = (ImageView) findViewById(R.id.item15);
+            items_tab[0][4].setOnClickListener(itemClickHandler);
+            items_tab[0][5] = (ImageView) findViewById(R.id.item16);
+            items_tab[0][5].setOnClickListener(itemClickHandler);
+            items_tab[1][0] = (ImageView) findViewById(R.id.item21);
+            items_tab[1][0].setOnClickListener(itemClickHandler);
+            items_tab[1][1] = (ImageView) findViewById(R.id.item22);
+            items_tab[1][1].setOnClickListener(itemClickHandler);
+            items_tab[1][2] = (ImageView) findViewById(R.id.item23);
+            items_tab[1][2].setOnClickListener(itemClickHandler);
+            items_tab[1][3] = (ImageView) findViewById(R.id.item24);
+            items_tab[1][3].setOnClickListener(itemClickHandler);
+            items_tab[1][4] = (ImageView) findViewById(R.id.item25);
+            items_tab[1][4].setOnClickListener(itemClickHandler);
+            items_tab[1][5] = (ImageView) findViewById(R.id.item26);
+            items_tab[1][5].setOnClickListener(itemClickHandler);
+            items_tab[2][0] = (ImageView) findViewById(R.id.item31);
+            items_tab[2][0].setOnClickListener(itemClickHandler);
+            items_tab[2][1] = (ImageView) findViewById(R.id.item32);
+            items_tab[2][1].setOnClickListener(itemClickHandler);
+            items_tab[2][2] = (ImageView) findViewById(R.id.item33);
+            items_tab[2][2].setOnClickListener(itemClickHandler);
+            items_tab[2][3] = (ImageView) findViewById(R.id.item34);
+            items_tab[2][3].setOnClickListener(itemClickHandler);
+            items_tab[2][4] = (ImageView) findViewById(R.id.item35);
+            items_tab[2][4].setOnClickListener(itemClickHandler);
+            items_tab[2][5] = (ImageView) findViewById(R.id.item36);
+            items_tab[2][5].setOnClickListener(itemClickHandler);
+            items_tab[3][0] = (ImageView) findViewById(R.id.item41);
+            items_tab[3][0].setOnClickListener(itemClickHandler);
+            items_tab[3][1] = (ImageView) findViewById(R.id.item42);
+            items_tab[3][1].setOnClickListener(itemClickHandler);
+            items_tab[3][2] = (ImageView) findViewById(R.id.item43);
+            items_tab[3][2].setOnClickListener(itemClickHandler);
+            items_tab[3][3] = (ImageView) findViewById(R.id.item44);
+            items_tab[3][3].setOnClickListener(itemClickHandler);
+            items_tab[3][4] = (ImageView) findViewById(R.id.item45);
+            items_tab[3][4].setOnClickListener(itemClickHandler);
+            items_tab[3][5] = (ImageView) findViewById(R.id.item46);
+            items_tab[3][5].setOnClickListener(itemClickHandler);
+            items_tab[4][0] = (ImageView) findViewById(R.id.item41);
+            items_tab[4][0].setOnClickListener(itemClickHandler);
+            items_tab[4][1] = (ImageView) findViewById(R.id.item42);
+            items_tab[4][1].setOnClickListener(itemClickHandler);
+            items_tab[4][2] = (ImageView) findViewById(R.id.item43);
+            items_tab[4][2].setOnClickListener(itemClickHandler);
+            items_tab[4][3] = (ImageView) findViewById(R.id.item44);
+            items_tab[4][3].setOnClickListener(itemClickHandler);
+            items_tab[4][4] = (ImageView) findViewById(R.id.item45);
+            items_tab[4][4].setOnClickListener(itemClickHandler);
+            items_tab[4][5] = (ImageView) findViewById(R.id.item46);
+            items_tab[4][5].setOnClickListener(itemClickHandler);
 
             checkGametype(gameStatsActivity.gameType);
             setChampNames();
@@ -286,11 +349,20 @@ public class stats_activity extends login_activity {
         }
     };
 
+    View.OnClickListener itemClickHandler = new View.OnClickListener() {
+        public void onClick(View v) {
+            vibra(50);
+            final Intent intent=new Intent(stats_activity.this,items_activity.class);
+            startActivity(intent);
+            int buttonID = v.getId();
+
+            }};
+
+
     public void vibra(int time) {
         vibra = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
         vibra.vibrate(time);
     }
-   // public void on
 
     private void checkGametype(int type){
         if(type == 3){
