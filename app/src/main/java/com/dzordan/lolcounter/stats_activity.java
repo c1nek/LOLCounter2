@@ -1,5 +1,6 @@
 package com.dzordan.lolcounter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -10,6 +11,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Vibrator;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -31,15 +33,18 @@ public class stats_activity extends login_activity {
     ImageView[] champico_filed_tab = new ImageView[5];
     TextView[][] spellico_field_tab = new TextView[5][2];
     ImageView[][] items_tab = new ImageView[5][6];
+    int[] values_tab = new int[]{10,20,10,10,10,25,10,10,10,10,20,10,20,10,15,10,10,10,20,15,10,20,20,10,10,10,20,10,10,10,10,10,20,10};
     LinearLayout linearLay4, linearLay5;
 
     game_stats gameStatsActivity;
 
     Vibrator vibra;
 
+    int itemID;
+    int buttonID;
+
     int backPressCount = 0;
-
-
+    boolean itemsPressed = false;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -138,17 +143,17 @@ public class stats_activity extends login_activity {
             items_tab[3][4].setOnClickListener(itemClickHandler);
             items_tab[3][5] = (ImageView) findViewById(R.id.item46);
             items_tab[3][5].setOnClickListener(itemClickHandler);
-            items_tab[4][0] = (ImageView) findViewById(R.id.item41);
+            items_tab[4][0] = (ImageView) findViewById(R.id.item51);
             items_tab[4][0].setOnClickListener(itemClickHandler);
-            items_tab[4][1] = (ImageView) findViewById(R.id.item42);
+            items_tab[4][1] = (ImageView) findViewById(R.id.item52);
             items_tab[4][1].setOnClickListener(itemClickHandler);
-            items_tab[4][2] = (ImageView) findViewById(R.id.item43);
+            items_tab[4][2] = (ImageView) findViewById(R.id.item53);
             items_tab[4][2].setOnClickListener(itemClickHandler);
-            items_tab[4][3] = (ImageView) findViewById(R.id.item44);
+            items_tab[4][3] = (ImageView) findViewById(R.id.item54);
             items_tab[4][3].setOnClickListener(itemClickHandler);
-            items_tab[4][4] = (ImageView) findViewById(R.id.item45);
+            items_tab[4][4] = (ImageView) findViewById(R.id.item55);
             items_tab[4][4].setOnClickListener(itemClickHandler);
-            items_tab[4][5] = (ImageView) findViewById(R.id.item46);
+            items_tab[4][5] = (ImageView) findViewById(R.id.item56);
             items_tab[4][5].setOnClickListener(itemClickHandler);
 
             checkGametype(gameStatsActivity.gameType);
@@ -171,6 +176,39 @@ public class stats_activity extends login_activity {
             finish();
         }
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 7 && resultCode == RESULT_OK && data != null) {
+            itemID = data.getIntExtra("itemid", 0);
+            Log.i("item ID", String.valueOf(itemID));
+            setItem();
+        }
+    }
+
+    private void setItem(){
+        ImageView temp = (ImageView) findViewById(buttonID);
+
+        String imageUri = "drawable/item" + itemID;
+        int imageResource = getResources().getIdentifier(imageUri, null, getPackageName());
+        Drawable res = getResources().getDrawable(imageResource);
+        temp.setImageDrawable(res);
+        temp.setClickable(false);
+        for(int i = 0; i < 4; i++){
+            for(int j = 0; j<5; j++){
+                if(temp == items_tab[i][j]){
+                    double cooldown = values_tab[itemID];
+                    double spell1value = gameStatsActivity.getSummonerInfoList().get(i).getSpell1CooldownX()*(1-(cooldown/100));
+                    double spell2value = gameStatsActivity.getSummonerInfoList().get(i).getSpell2CooldownX()*(1-(cooldown/100));
+                    gameStatsActivity.getSummonerInfoList().get(i).setSpell1CooldownX(spell1value);
+                    gameStatsActivity.getSummonerInfoList().get(i).setSpell2CooldownX(spell2value);
+                    spellico_field_tab[i][0].setText(String.valueOf((int)gameStatsActivity.getSummonerInfoList().get(i).getSpell1CooldownX()));
+                    spellico_field_tab[i][1].setText(String.valueOf((int)gameStatsActivity.getSummonerInfoList().get(i).getSpell2CooldownX()));
+                    break;
+                }
+            }
+        }
     }
 
     private void requestNewInterstitial() {
@@ -352,10 +390,10 @@ public class stats_activity extends login_activity {
     View.OnClickListener itemClickHandler = new View.OnClickListener() {
         public void onClick(View v) {
             vibra(50);
+            itemsPressed = true;
             final Intent intent=new Intent(stats_activity.this,items_activity.class);
-            startActivity(intent);
-            int buttonID = v.getId();
-
+            startActivityForResult(intent, 7);
+            buttonID = v.getId();
             }};
 
 
