@@ -31,6 +31,7 @@ public class items_activity extends login_activity{
         mAdView.loadAd(adRequest);
 
         items_tab[0] = (ImageView) findViewById(R.id.item1);
+
         items_tab[1] = (ImageView) findViewById(R.id.item2);
         items_tab[2] = (ImageView) findViewById(R.id.iitem3);
         items_tab[3] = (ImageView) findViewById(R.id.item4);
