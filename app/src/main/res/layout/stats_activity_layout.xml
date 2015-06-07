@@ -32,7 +32,8 @@
             android:id="@+id/textView2"
             android:layout_column="2"
             android:layout_weight="0.5"
-            android:gravity="center" />
+            android:gravity="center"
+            android:visibility="invisible" />
 
         <TextView
             android:layout_width="0dp"
@@ -95,7 +96,8 @@
                 android:id="@+id/ultImage"
                 android:layout_marginLeft="10dp"
                 android:background="#ffb73021"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:visibility="invisible" />
 
             <TextView
                 android:layout_width="40dp"
@@ -218,7 +220,8 @@
                 android:id="@+id/imageView2"
                 android:layout_marginLeft="10dp"
                 android:background="#ffb73021"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:visibility="invisible" />
 
             <TextView
                 android:layout_width="40dp"
@@ -339,7 +342,8 @@
                 android:id="@+id/imageView12"
                 android:layout_marginLeft="10dp"
                 android:background="#ffb73021"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:visibility="invisible" />
 
             <TextView
                 android:layout_width="40dp"
@@ -460,7 +464,8 @@
                 android:id="@+id/imageView22"
                 android:layout_marginLeft="10dp"
                 android:background="#ffb73021"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:visibility="invisible" />
 
             <TextView
                 android:layout_width="40dp"
@@ -583,7 +588,8 @@
                 android:id="@+id/imageView32"
                 android:layout_marginLeft="10dp"
                 android:background="#ffb73021"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:visibility="invisible" />
 
             <TextView
                 android:layout_width="40dp"
